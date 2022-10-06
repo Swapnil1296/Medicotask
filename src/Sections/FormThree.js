@@ -32,8 +32,9 @@ const FormThree = ({
     if (clearField) {
       setValueForHolder("");
     }
-  }, [clearField, divCode]);
+  }, [clearField]);
   const Token = useSelector((state) => state.Auth);
+
   const handleData = () => {
     axios
       .get(
@@ -50,7 +51,8 @@ const FormThree = ({
         console.log(error);
       });
   };
-  useEffect(() => {handleData()}, [divCode, dist_id, validateTwo, clearField, clearData]);
+
+  // useEffect(() => {handleData()}, [divCode, dist_id, validateTwo, clearField, clearData]);
   const handleChangedValue = (e) => {
     console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
@@ -60,10 +62,10 @@ const FormThree = ({
     console.log("clicked");
   };
   useEffect(() => {
-    if (clearData) {
+    if (clearData || clearField) {
       setValueForHolder("");
     }
-  }, [clearData, valueForHolder]);
+  }, [clearData, clearField]);
   return (
     <>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -131,6 +133,7 @@ const FormThree = ({
         validateThree={validateThree}
         clearField={clearField}
         clearData={clearData}
+        valueForHolder={valueForHolder}
       />
     </>
   );

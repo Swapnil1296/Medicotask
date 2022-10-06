@@ -15,13 +15,14 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   const [valueForHolder, setValueForHolder] = useState("");
   const [divCode, setDivCode] = useState([]);
   const [validateTwo, setValidateTwo] = useState(true);
-  console.log("items divcode:-", divCode);
+  // console.log("items divcode:-", divCode);
 
   const handleClose = (dc) => {
     setShow(false);
     setDivCode(dc);
     setValidateTwo(false);
   };
+
   const handleShow = () => {
     setShow(true);
     if (!validate) {
@@ -55,18 +56,19 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
       });
   };
   const handleChangedValue = (e) => {
-    console.log("targeted value:-", e.target.value);
+    // console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
     setValueForHolder("");
     // console.log("clicked");
   };
+  console.log("CleearData:-", clearData);
   useEffect(() => {
     if (clearData) {
       setValueForHolder("");
     }
-  }, [clearData, valueForHolder]);
+  }, [clearData]);
   console.log("clearData", clearData);
   return (
     <>
@@ -123,7 +125,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
                   onClick={() => handleClose(item.division_code)}
                   className="roundCheckbox"
                 />
-                <label for="vehicle1" style={{ margin: "2px" }}>
+                <label htmlFor="vehicle1" style={{ margin: "2px" }}>
                   {item.division_name}
                 </label>
                 <hr></hr>

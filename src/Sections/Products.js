@@ -11,6 +11,7 @@ const Products = ({
   validateThree,
   clearField,
   clearData,
+  valueForHolder,
 }) => {
   // console.log("data in Products page:-", divCode, dist_id, cfaNumber);
   const [data, setData] = useState("");
@@ -34,10 +35,8 @@ const Products = ({
   useEffect(() => {
     if (!validateThree) {
       handleData();
-    } else {
-      return;
     }
-  }, [cfaNumber]);
+  }, [cfaNumber, divCode, dist_id]);
   //   handleData();
   useEffect(() => {
     if (clearField) {
@@ -45,11 +44,11 @@ const Products = ({
     }
   }, [clearField]);
   // console.log("clearField in products:-",clearField);
-useEffect(() => {
-  if (clearData) {
-    setData("");
-  }
-}, [clearData,dist_id,divCode]);
+  useEffect(() => {
+    if (clearData) {
+      setData("");
+    }
+  }, [clearData]);
   return (
     <>
       {data &&

@@ -20,9 +20,9 @@ const FormOne = () => {
   const [dist_id, setDistID] = useState(0);
   const [validate, setValidate] = useState(true);
   const [clearField, setClearField] = useState(false);
-  const [clearData,setClearData]=useState(false)
+  const [clearData,setClearData]=useState(false);
   console.log("clearField:-", clearField);
-  console.log("dist_id in useState:-", dist_id);
+  // console.log("dist_id in useState:-", dist_id);
   const Token = useSelector((state) => state.Auth);
   //   console.log("Auth in FormOne:-", Token);
   const handleData = () => {
@@ -50,15 +50,12 @@ const FormOne = () => {
     setClearField(true);
     // console.log("handleClose:-", dist_id);
   };
-  useEffect(() => {
-    if(clearData){
-      setData('')
-    }
-  }, [clearData]);
+ 
   const handleShow = () => {
     setShow(true);
     handleData();
      setClearField(false);
+     setClearData(false)
   };
   const handleChangedValue = (e) => {
     // console.log("targeted value:-", e.target.value);
@@ -69,6 +66,11 @@ const FormOne = () => {
     setClearData(true);
     // console.log("clicked");
   };
+   useEffect(() => {
+     if (clearData) {
+       setData("");
+     }
+   }, [clearData]);
   return (
     <Container>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
