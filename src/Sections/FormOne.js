@@ -21,7 +21,7 @@ const FormOne = () => {
   const [validate, setValidate] = useState(true);
   const [clearField, setClearField] = useState(false);
   const [clearData,setClearData]=useState(false);
-  console.log("clearField:-", clearField);
+  
   // console.log("dist_id in useState:-", dist_id);
   const Token = useSelector((state) => state.Auth);
   //   console.log("Auth in FormOne:-", Token);

@@ -13,7 +13,9 @@ const FormThree = ({
 }) => {
   // console.log("divCode in formthree:--", divCode, dist_id);
   const [show, setShow] = useState(false);
-  const [getData, setGetData] = useState([]);
+  const [getData, setGetData] = useState('');
+  
+  // console.log('getData is :-',getData[0])
   const [valueForHolder, setValueForHolder] = useState("");
   const [cfaNumber, setCfaNum] = useState(0);
   const [validateThree, setValidateThree] = useState(true);
@@ -24,9 +26,9 @@ const FormThree = ({
   };
   const handleShow = () => {
     setShow(true);
-    if (!validateTwo) {
-      handleData();
-    }
+    // if (!validateTwo) {
+    //   // handleData();
+    // }
   };
   useEffect(() => {
     if (clearField) {
@@ -35,31 +37,35 @@ const FormThree = ({
   }, [clearField]);
   const Token = useSelector((state) => state.Auth);
 
-  const handleData = () => {
-    axios
-      .get(
-        `https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${dist_id}&dc=${divCode}`,
-        {
-          headers: { Authorization: `Bearer ${Token}` },
-        }
-      )
-      .then(function (response) {
-        // console.log("response data in formTHree:-", response.data);
-        setGetData(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  useEffect(() => {
+    const handleData = () => {
+      axios
+        .get(
+          `https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${dist_id}&dc=${divCode}`,
+          {
+            headers: { Authorization: `Bearer ${Token}` },
+          }
+        )
+        .then(function (response) {
+          setGetData(response.data.data);
+          const value = response.data.data[0];
+          console.log("value location_name:-",value.location_name);
+          setValueForHolder(value.location_name);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    if (divCode) {
+      handleData();
+    }
+  }, [divCode]);
 
-  // useEffect(() => {handleData()}, [divCode, dist_id, validateTwo, clearField, clearData]);
   const handleChangedValue = (e) => {
-    // console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
     setValueForHolder("");
-    console.log("clicked");
   };
   useEffect(() => {
     if (clearData || clearField) {

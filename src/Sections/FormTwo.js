@@ -9,7 +9,7 @@ import { TiDelete } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
 const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
-  console.log("validate :-", validate);
+  // console.log("validate :-", validate);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState("");
@@ -63,7 +63,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
     setValueForHolder("");
     // console.log("clicked");
   };
-  console.log("CleearData:-", clearData);
+  // console.log("CleearData:-", clearData);
   useEffect(() => {
     if (clearData) {
       setValueForHolder("");
