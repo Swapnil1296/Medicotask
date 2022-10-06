@@ -3,15 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FormThree from "./FormThree";
-import { TiDelete } from "react-icons/ti";
+
 import { ImCross } from "react-icons/im";
 
 const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   // console.log("validate :-", validate);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
+  console.log("getData is :-", getData);
   const [valueForHolder, setValueForHolder] = useState("");
   const [divCode, setDivCode] = useState([]);
   const [validateTwo, setValidateTwo] = useState(true);
@@ -27,8 +28,6 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
     setShow(true);
     if (!validate) {
       handleData();
-    } else {
-      return;
     }
   };
   useEffect(() => {
@@ -38,6 +37,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   }, [clearField]);
   //   console.log("dist_id in props:-", dist_id);
   const Token = useSelector((state) => state.Auth);
+  const dispatch = useDispatch();
   const handleData = () => {
     axios
       .get(
@@ -61,9 +61,9 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   };
   const handleClearField = (e) => {
     setValueForHolder("");
-    // console.log("clicked");
+   
   };
-  // console.log("CleearData:-", clearData);
+
   useEffect(() => {
     if (clearData) {
       setValueForHolder("");

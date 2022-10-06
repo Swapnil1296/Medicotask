@@ -36,7 +36,7 @@ const Products = ({
     if (!validateThree) {
       handleData();
     }
-  }, [cfaNumber, divCode, dist_id,validateThree]);
+  }, [cfaNumber, divCode, dist_id]);
   //   handleData();
   useEffect(() => {
     if (clearField) {

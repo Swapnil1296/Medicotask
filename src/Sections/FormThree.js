@@ -19,8 +19,8 @@ const FormThree = ({
   const [validateThree, setValidateThree] = useState(true);
   const handleClose = (cfa) => {
     setShow(false);
-    setCfaNum(cfa);
-    setValidateThree(false);
+  
+    ;
   };
   const handleShow = () => {
     setShow(true);
@@ -47,8 +47,9 @@ const FormThree = ({
         console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
         const value = response.data.data[0];
-        console.log("value:-", value.location_name);
+        console.log("value:-", value.cfa_code);
         setValueForHolder(value.location_name);
+          setCfaNum(value.cfa_code);
       })
       .catch((error) => {
         console.log(error);
@@ -58,8 +59,11 @@ const FormThree = ({
   useEffect(() => {
     if (dist_id !== 0 && divCode !== 0) {
       handleData();
+      setValidateThree(false);
     }
   }, [divCode, dist_id]);
+  console.log("validateThree:-",validateThree)
+  console.log("cfaNumber:-", cfaNumber);
 
   const handleChangedValue = (e) => {
     // console.log("targeted value:-", e.target.value);
