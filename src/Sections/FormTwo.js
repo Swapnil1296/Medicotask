@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -8,19 +8,19 @@ import FormThree from "./FormThree";
 import { TiDelete } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
-const FormTwo = ({ dist_id, validate }) => {
+const FormTwo = ({ dist_id, validate, clearField }) => {
   console.log("validate :-", validate);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState("");
   const [divCode, setDivCode] = useState([]);
-    const [validateTwo,setValidateTwo]=useState(true)
+  const [validateTwo, setValidateTwo] = useState(true);
   console.log("items divcode:-", divCode);
 
   const handleClose = (dc) => {
     setShow(false);
     setDivCode(dc);
-    setValidateTwo(false)
+    setValidateTwo(false);
   };
   const handleShow = () => {
     setShow(true);
@@ -30,6 +30,11 @@ const FormTwo = ({ dist_id, validate }) => {
       return;
     }
   };
+  useEffect(() => {
+    if(clearField){
+  setValueForHolder("");
+    }
+  }, [clearField]);
   //   console.log("dist_id in props:-", dist_id);
   const Token = useSelector((state) => state.Auth);
   const handleData = () => {
@@ -53,10 +58,10 @@ const FormTwo = ({ dist_id, validate }) => {
     console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
-  const handleClearField =(e)=>{
-    setValueForHolder("")
-    console.log("clicked")
-  }
+  const handleClearField = (e) => {
+    setValueForHolder("");
+    // console.log("clicked");
+  };
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -76,15 +81,6 @@ const FormTwo = ({ dist_id, validate }) => {
             <ImCross />
           </InputGroup.Text>
         </InputGroup>
-        {/* <div className="position-relative">
-          <div
-            className="position-absolute "
-            
-            onClick={() => handleClearField()}
-          >
-            <TiDelete />
-          </div>
-        </div> */}
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -137,6 +133,7 @@ const FormTwo = ({ dist_id, validate }) => {
         divCode={divCode}
         dist_id={dist_id}
         validateTwo={validateTwo}
+        clearField={clearField}
       />
     </>
   );

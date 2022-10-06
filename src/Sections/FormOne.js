@@ -19,7 +19,8 @@ const FormOne = () => {
   const [valueForHolder, setValueForHolder] = useState("");
   const [dist_id, setDistID] = useState(0);
   const [validate, setValidate] = useState(true);
-
+  const [clearField, setClearField] = useState(false);
+  console.log("clearField:-", clearField);
   console.log("dist_id in useState:-", dist_id);
   const Token = useSelector((state) => state.Auth);
   //   console.log("Auth in FormOne:-", Token);
@@ -34,7 +35,6 @@ const FormOne = () => {
       .then(function (response) {
         // console.log("response data in formOne:-", response.data);
         setData(response.data);
-    
       })
       .catch((error) => {
         console.log(error);
@@ -43,23 +43,25 @@ const FormOne = () => {
 
   //   console.log("data in useState:-", data.data);
   const handleClose = (dist_id) => {
-       setShow(false);
-        setValidate(false);
+    setShow(false);
+    setValidate(false);
     setDistID(dist_id);
-    console.log("handleClose:-", dist_id);
+    setClearField(true);
+    // console.log("handleClose:-", dist_id);
   };
   const handleShow = () => {
     setShow(true);
     handleData();
+     setClearField(false);
   };
   const handleChangedValue = (e) => {
     console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
-   const handleClearField = (e) => {
-     setValueForHolder("");
-     console.log("clicked");
-   };
+  const handleClearField = (e) => {
+    setValueForHolder("");
+    console.log("clicked");
+  };
   return (
     <Container>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -118,7 +120,7 @@ const FormOne = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <FormTwo dist_id={dist_id} validate={validate} />
+      <FormTwo dist_id={dist_id} validate={validate} clearField={clearField} />
     </Container>
   );
 };

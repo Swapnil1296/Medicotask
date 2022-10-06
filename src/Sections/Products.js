@@ -1,9 +1,16 @@
 import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-const Products = ({ divCode, dist_id, cfaNumber, validateThree }) => {
+const Products = ({
+  divCode,
+  dist_id,
+  cfaNumber,
+  validateThree,
+  clearField,
+}) => {
   // console.log("data in Products page:-", divCode, dist_id, cfaNumber);
   const [data, setData] = useState("");
   const Token = useSelector((state) => state.Auth);
@@ -16,7 +23,7 @@ const Products = ({ divCode, dist_id, cfaNumber, validateThree }) => {
         }
       )
       .then(function (response) {
-        console.log("response data in Products Page:-", response.data.data);
+        // console.log("response data in Products Page:-", response.data.data);
         setData(response.data.data);
       })
       .catch((error) => {
@@ -24,14 +31,19 @@ const Products = ({ divCode, dist_id, cfaNumber, validateThree }) => {
       });
   };
   useEffect(() => {
-    if (!validateThree){
-         handleData();
-    }else{
-        return
+    if (!validateThree) {
+      handleData();
+    } else {
+      return;
     }
-        
   }, [cfaNumber]);
   //   handleData();
+  useEffect(() => {
+    if(clearField){
+      setData(null)
+    }
+  }, [clearField]);
+  console.log("clearField in products:-",clearField);
 
   return (
     <>

@@ -1,16 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Products from "./Products";
 import { ImCross } from "react-icons/im";
-const FormThree = ({ divCode, dist_id, validateTwo }) => {
+const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
   console.log("divCode in formthree:--", divCode, dist_id);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState("");
   const [cfaNumber, setCfaNum] = useState(0);
-  const [validateThree, setValidateThree]=useState(true)
+  const [validateThree, setValidateThree] = useState(true);
   const handleClose = (cfa) => {
     setShow(false);
     setCfaNum(cfa);
@@ -18,9 +18,15 @@ const FormThree = ({ divCode, dist_id, validateTwo }) => {
   };
   const handleShow = () => {
     setShow(true);
-    if (!validateTwo){ handleData();}
-
+    if (!validateTwo) {
+      handleData();
+    }
   };
+  useEffect(() => {
+    if (clearField) {
+      setValueForHolder("");
+    }
+  }, [clearField]);
   const Token = useSelector((state) => state.Auth);
   const handleData = () => {
     axios
@@ -42,10 +48,10 @@ const FormThree = ({ divCode, dist_id, validateTwo }) => {
     console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
-   const handleClearField = (e) => {
-     setValueForHolder("");
-     console.log("clicked");
-   };
+  const handleClearField = (e) => {
+    setValueForHolder("");
+    console.log("clicked");
+  };
   return (
     <>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -110,6 +116,7 @@ const FormThree = ({ divCode, dist_id, validateTwo }) => {
         dist_id={dist_id}
         cfaNumber={cfaNumber}
         validateThree={validateThree}
+        clearField={clearField}
       />
     </>
   );
