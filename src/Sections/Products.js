@@ -33,14 +33,14 @@ const Products = ({
       });
   };
   useEffect(() => {
-    if (!validateThree) {
+    if (cfaNumber !== 0 && divCode !== 0 && dist_id !== 0) {
       handleData();
     }
   }, [cfaNumber, divCode, dist_id]);
-  //   handleData();
+
   useEffect(() => {
     if (clearField) {
-      setData('');
+      setData("");
     }
   }, [clearField]);
   // console.log("clearField in products:-",clearField);

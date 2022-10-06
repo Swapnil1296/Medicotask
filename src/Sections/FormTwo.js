@@ -15,7 +15,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   const [getData, setGetData] = useState([]);
  
   const [valueForHolder, setValueForHolder] = useState("");
-  const [divCode, setDivCode] = useState([]);
+  const [divCode, setDivCode] = useState(0);
   const [validateTwo, setValidateTwo] = useState(true);
   
 
