@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const Products = ({
@@ -36,11 +36,11 @@ const Products = ({
     if (!validateThree) {
       handleData();
     }
-  }, [cfaNumber, divCode, dist_id]);
+  }, [cfaNumber, divCode, dist_id,validateThree]);
   //   handleData();
   useEffect(() => {
     if (clearField) {
-      setData(null);
+      setData('');
     }
   }, [clearField]);
   // console.log("clearField in products:-",clearField);

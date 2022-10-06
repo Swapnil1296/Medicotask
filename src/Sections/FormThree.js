@@ -44,7 +44,7 @@ const FormThree = ({
         }
       )
       .then(function (response) {
-        console.log("response data in formTHree:-", response.data);
+        // console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
       })
       .catch((error) => {
@@ -54,7 +54,7 @@ const FormThree = ({
 
   // useEffect(() => {handleData()}, [divCode, dist_id, validateTwo, clearField, clearData]);
   const handleChangedValue = (e) => {
-    console.log("targeted value:-", e.target.value);
+    // console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
