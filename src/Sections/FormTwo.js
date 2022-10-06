@@ -9,14 +9,15 @@ import FormThree from "./FormThree";
 import { ImCross } from "react-icons/im";
 
 const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
-  // console.log("validate :-", validate);
+  
+  console.log("clearField:-", clearField);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
-  console.log("getData is :-", getData);
+ 
   const [valueForHolder, setValueForHolder] = useState("");
   const [divCode, setDivCode] = useState([]);
   const [validateTwo, setValidateTwo] = useState(true);
-  // console.log("items divcode:-", divCode);
+  
 
   const handleClose = (dc) => {
     setShow(false);
@@ -35,9 +36,9 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
       setValueForHolder("");
     }
   }, [clearField]);
-  //   console.log("dist_id in props:-", dist_id);
+
   const Token = useSelector((state) => state.Auth);
-  const dispatch = useDispatch();
+  
   const handleData = () => {
     axios
       .get(
@@ -49,14 +50,14 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
       .then(function (response) {
         console.log("response data in formTwo:-", response.data.data);
         setGetData(response.data.data);
-        // setValidate(true);
+      
       })
       .catch((error) => {
         console.log(error);
       });
   };
   const handleChangedValue = (e) => {
-    // console.log("targeted value:-", e.target.value);
+   
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
@@ -69,7 +70,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
       setValueForHolder("");
     }
   }, [clearData]);
-  console.log("clearData", clearData);
+  
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -79,7 +80,7 @@ const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
             value={valueForHolder}
             onClick={handleShow}
             className="mb-3"
-            disabled={validate}
+            disabled={clearField}
             placeholder="Select Division"
           />
           <InputGroup.Text

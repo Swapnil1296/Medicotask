@@ -11,7 +11,7 @@ const FormThree = ({
   clearField,
   clearData,
 }) => {
-  // console.log("divCode in formthree:--", divCode, dist_id);
+  
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState("");
@@ -44,7 +44,7 @@ const FormThree = ({
         }
       )
       .then(function (response) {
-        console.log("response data in formTHree:-", response.data);
+        // console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
         const value = response.data.data[0];
         console.log("value:-", value.cfa_code);
@@ -62,11 +62,10 @@ const FormThree = ({
       setValidateThree(false);
     }
   }, [divCode, dist_id]);
-  console.log("validateThree:-",validateThree)
-  console.log("cfaNumber:-", cfaNumber);
+ 
 
   const handleChangedValue = (e) => {
-    // console.log("targeted value:-", e.target.value);
+   
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
@@ -74,10 +73,10 @@ const FormThree = ({
     console.log("clicked");
   };
   useEffect(() => {
-    if (clearData || clearField) {
+    if (clearData) {
       setValueForHolder("");
     }
-  }, [clearData, clearField]);
+  }, [clearData]);
   return (
     <>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -87,7 +86,7 @@ const FormThree = ({
           onClick={handleShow}
           className="mb-3"
           placeholder="Select Depot"
-          disabled={validateTwo}
+          disabled={clearField}
         />
         <InputGroup.Text
           id="basic-addon1"

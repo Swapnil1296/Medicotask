@@ -16,9 +16,7 @@ const FormOne = () => {
   const [clearData, setClearData] = useState(false);
 
   const Token = useSelector((state) => state.Auth);
-  const ClearTwo = useSelector((state) => state.isClearTwo);
 
-  console.log("ClearTwo in FormOne:-", ClearTwo);
   const handleData = () => {
     axios
       .get(
@@ -40,17 +38,20 @@ const FormOne = () => {
     setShow(false);
     setValidate(false);
     setDistID(dist_id);
-    setClearField(true);
   };
-
+  useEffect(()=>{
+    if(valueForHolder ===''){
+      setClearField(true)
+    }
+  },[valueForHolder])
+console.log("valueForHolder", valueForHolder);
   const handleShow = () => {
     setShow(true);
     handleData();
-    setClearField(false);
-    setClearData(false);
   };
   const handleChangedValue = (e) => {
     setValueForHolder(e.target.value);
+    setClearField(false);
   };
   const handleClearField = (e) => {
     setValueForHolder("");
