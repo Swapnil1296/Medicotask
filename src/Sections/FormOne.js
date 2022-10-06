@@ -20,6 +20,7 @@ const FormOne = () => {
   const [dist_id, setDistID] = useState(0);
   const [validate, setValidate] = useState(true);
   const [clearField, setClearField] = useState(false);
+  const [clearData,setClearData]=useState(false)
   console.log("clearField:-", clearField);
   console.log("dist_id in useState:-", dist_id);
   const Token = useSelector((state) => state.Auth);
@@ -49,18 +50,24 @@ const FormOne = () => {
     setClearField(true);
     // console.log("handleClose:-", dist_id);
   };
+  useEffect(() => {
+    if(clearData){
+      setData('')
+    }
+  }, [clearData]);
   const handleShow = () => {
     setShow(true);
     handleData();
      setClearField(false);
   };
   const handleChangedValue = (e) => {
-    console.log("targeted value:-", e.target.value);
+    // console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
     setValueForHolder("");
-    console.log("clicked");
+    setClearData(true);
+    // console.log("clicked");
   };
   return (
     <Container>
@@ -72,6 +79,7 @@ const FormOne = () => {
           onClick={handleShow}
           aria-describedby="basic-addon1"
           className="mb-3"
+          placeholder="Select Distributor"
         />
         <InputGroup.Text
           id="basic-addon1"
@@ -120,7 +128,12 @@ const FormOne = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <FormTwo dist_id={dist_id} validate={validate} clearField={clearField} />
+      <FormTwo
+        dist_id={dist_id}
+        validate={validate}
+        clearField={clearField}
+        clearData={clearData}
+      />
     </Container>
   );
 };

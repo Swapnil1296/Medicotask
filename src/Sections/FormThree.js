@@ -4,8 +4,14 @@ import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Products from "./Products";
 import { ImCross } from "react-icons/im";
-const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
-  console.log("divCode in formthree:--", divCode, dist_id);
+const FormThree = ({
+  divCode,
+  dist_id,
+  validateTwo,
+  clearField,
+  clearData,
+}) => {
+  // console.log("divCode in formthree:--", divCode, dist_id);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState("");
@@ -26,7 +32,7 @@ const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
     if (clearField) {
       setValueForHolder("");
     }
-  }, [clearField]);
+  }, [clearField, divCode]);
   const Token = useSelector((state) => state.Auth);
   const handleData = () => {
     axios
@@ -44,6 +50,7 @@ const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
         console.log(error);
       });
   };
+  useEffect(() => {handleData()}, [divCode, dist_id, validateTwo, clearField, clearData]);
   const handleChangedValue = (e) => {
     console.log("targeted value:-", e.target.value);
     setValueForHolder(e.target.value);
@@ -52,6 +59,11 @@ const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
     setValueForHolder("");
     console.log("clicked");
   };
+  useEffect(() => {
+    if (clearData) {
+      setValueForHolder("");
+    }
+  }, [clearData, valueForHolder]);
   return (
     <>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -60,6 +72,7 @@ const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
           value={valueForHolder}
           onClick={handleShow}
           className="mb-3"
+          placeholder="Select Depot"
           disabled={validateTwo}
         />
         <InputGroup.Text
@@ -117,6 +130,7 @@ const FormThree = ({ divCode, dist_id, validateTwo, clearField }) => {
         cfaNumber={cfaNumber}
         validateThree={validateThree}
         clearField={clearField}
+        clearData={clearData}
       />
     </>
   );

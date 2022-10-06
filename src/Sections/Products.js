@@ -10,6 +10,7 @@ const Products = ({
   cfaNumber,
   validateThree,
   clearField,
+  clearData,
 }) => {
   // console.log("data in Products page:-", divCode, dist_id, cfaNumber);
   const [data, setData] = useState("");
@@ -39,12 +40,16 @@ const Products = ({
   }, [cfaNumber]);
   //   handleData();
   useEffect(() => {
-    if(clearField){
-      setData(null)
+    if (clearField) {
+      setData(null);
     }
   }, [clearField]);
-  console.log("clearField in products:-",clearField);
-
+  // console.log("clearField in products:-",clearField);
+useEffect(() => {
+  if (clearData) {
+    setData("");
+  }
+}, [clearData,dist_id,divCode]);
   return (
     <>
       {data &&

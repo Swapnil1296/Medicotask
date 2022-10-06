@@ -8,7 +8,7 @@ import FormThree from "./FormThree";
 import { TiDelete } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
-const FormTwo = ({ dist_id, validate, clearField }) => {
+const FormTwo = ({ dist_id, validate, clearField, clearData }) => {
   console.log("validate :-", validate);
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
@@ -31,8 +31,8 @@ const FormTwo = ({ dist_id, validate, clearField }) => {
     }
   };
   useEffect(() => {
-    if(clearField){
-  setValueForHolder("");
+    if (clearField) {
+      setValueForHolder("");
     }
   }, [clearField]);
   //   console.log("dist_id in props:-", dist_id);
@@ -62,6 +62,12 @@ const FormTwo = ({ dist_id, validate, clearField }) => {
     setValueForHolder("");
     // console.log("clicked");
   };
+  useEffect(() => {
+    if (clearData) {
+      setValueForHolder("");
+    }
+  }, [clearData, valueForHolder]);
+  console.log("clearData", clearData);
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -72,6 +78,7 @@ const FormTwo = ({ dist_id, validate, clearField }) => {
             onClick={handleShow}
             className="mb-3"
             disabled={validate}
+            placeholder="Select Division"
           />
           <InputGroup.Text
             id="basic-addon1"
@@ -134,6 +141,7 @@ const FormTwo = ({ dist_id, validate, clearField }) => {
         dist_id={dist_id}
         validateTwo={validateTwo}
         clearField={clearField}
+        clearData={clearData}
       />
     </>
   );
