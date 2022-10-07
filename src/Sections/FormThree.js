@@ -55,7 +55,7 @@ const FormThree = ({
         }
       )
       .then(function (response) {
-        // console.log("response data in formTHree:-", response.data);
+        console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
         const value = response.data.data[0];
         // console.log('value:-', value.cfa_code);
@@ -107,7 +107,7 @@ const FormThree = ({
       </InputGroup>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Search Depot </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -45,7 +45,7 @@ const FormOne = () => {
         }
       )
       .then(function (response) {
-        // console.log("response data in formOne:-", response.data);
+        console.log("response data in formOne:-", response.data);
         setData(response.data.data);
       })
       .catch((error) => {
@@ -105,7 +105,7 @@ const FormOne = () => {
       {/* Modal start here */}
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Select Distributor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -118,7 +118,7 @@ const FormOne = () => {
             data.map((item, i) => (
               <div key={i}>
                 <input
-                  type="checkbox"
+                  type="radio"
                   id="vehicle1"
                   name="vehicle1"
                   value={item.customer_name}

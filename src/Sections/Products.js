@@ -44,15 +44,8 @@ const Products = ({
    if (valueForHolder !== "") {
      handleData();
    }
- }, [valueForHolder]);
- console.log("valueForHolder in products", valueForHolder);
-  // useEffect(() => {
-  //   if (clearField) {
-  //     setData('');
-  //   }
-  // }, [clearField]);
-  // console.log("clearField in products:-",clearField);
-//  console.log("clearProThree:-", clearProThree);
+ }, [valueForHolder,divCode]);
+
   return (
     <>
       {data &&

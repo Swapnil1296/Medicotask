@@ -84,7 +84,7 @@ const FormTwo = ({
         }
       )
       .then(function (response) {
-        // console.log("response data in formTwo:-", response.data.data);
+        console.log("response data in formTwo:-", response.data.data);
         setGetData(response.data.data);
       })
       .catch((error) => {
