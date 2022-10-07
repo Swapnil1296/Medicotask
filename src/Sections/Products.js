@@ -32,7 +32,7 @@ const Products = ({
         }
       )
       .then(function (response) {
-        console.log("response data in Products Page:-", response.data.data);
+        // console.log("response data in Products Page:-", response.data.data);
         setData(response.data.data);
       })
       .catch((error) => {
@@ -43,6 +43,10 @@ const Products = ({
    console.log("api hit");
    if (valueForHolder !== "") {
      handleData();
+      console.log("api hit again");
+   }
+   if(valueForHolder===''){
+    setData('')
    }
  }, [valueForHolder,divCode]);
 

@@ -23,7 +23,7 @@ const FormOne = () => {
       setDisabledOther(true);
     }
   }, [valueForHolder]);
-  //  console.log('valueForHolder', valueForHolder);
+ 
 
   useEffect(() => {
     if (valueForHolder === "") {
@@ -32,8 +32,7 @@ const FormOne = () => {
       setdisableSecond(false);
     }
   }, [valueForHolder]);
-//  console.log("disableSecond:-", disableSecond);
-//  console.log("valueForHolder:-", valueForHolder);
+//
   const Token = useSelector((state) => state.Auth);
 
   const handleData = () => {
@@ -136,9 +135,7 @@ const FormOne = () => {
             ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          
         </Modal.Footer>
       </Modal>
       <FormTwo

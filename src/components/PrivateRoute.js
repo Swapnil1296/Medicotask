@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const PrivateRoute = (props) => {
   const { Component } = props;
   const LoggedData = useSelector((state) => state.isLoggedIng);
-  console.log("LoggedData:", LoggedData);
+  console.log("LoggedData: ", LoggedData);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const handledLogOut = () => {

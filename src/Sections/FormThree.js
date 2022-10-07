@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Form, InputGroup, Modal } from "react-bootstrap";
+import {  Form, InputGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Products from "./Products";
 import { ImCross } from "react-icons/im";
@@ -8,30 +8,33 @@ const FormThree = ({
   divCode,
   dist_id,
   validateTwo,
- 
+  clearLast,
   disabledOther,
   disableThree,
 }) => {
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
-  const [valueForHolder, setValueForHolder] = useState('');
+  const [valueForHolder, setValueForHolder] = useState("");
   const [cfaNumber, setCfaNum] = useState(0);
   const [clearProThree, setclearProThree] = useState(false);
-  
 
-   useEffect(() => {
-     if (disabledOther) {
-       setValueForHolder('');
-     }
-   }, [disabledOther]);
-  
-   useEffect(() => {
-     if (disableThree) {
-       setValueForHolder('');
-     }
-   }, [disableThree]);
-  // console.log('disabledOther in three', disabledOther);
-  // console.log('disableThree', disableThree);
+  useEffect(() => {
+    if (disabledOther) {
+      setValueForHolder("");
+    }
+  }, [disabledOther]);
+
+  useEffect(() => {
+    if (disableThree) {
+      setValueForHolder("");
+    }
+  }, [disableThree]);
+  /* for clearing the selected fields on reselect */
+  useEffect(() => {
+     setGetData("");
+     setValueForHolder("");
+  }, [clearLast]);
+
   const handleClose = (cfa) => {
     setShow(false);
     setCfaNum(cfa);
@@ -39,7 +42,7 @@ const FormThree = ({
   const handleShow = () => {
     setShow(true);
     setclearProThree(false);
-    if (dist_id!==0 && divCode !==0) {
+    if (dist_id !== 0 && divCode !== 0) {
       handleData();
     }
   };
@@ -51,41 +54,30 @@ const FormThree = ({
       .get(
         `https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${dist_id}&dc=${divCode}`,
         {
-          headers: {Authorization: `Bearer ${Token}`},
+          headers: { Authorization: `Bearer ${Token}` },
         }
       )
       .then(function (response) {
-        console.log("response data in formTHree:-", response.data);
+        // console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
-        const value = response.data.data[0];
-        // console.log('value:-', value.cfa_code);
-        // setValueForHolder(value.location_name);
-        // // setCfaNum(value.cfa_code);
+      
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  // useEffect(() => {
-  //   if (dist_id !== 0 && divCode !== 0) {
-  //     handleData();
-  //     setValidateThree(false);
-  //   }else{
-  //     return
-  //   }
-  // }, [divCode, dist_id]);
+  
 
   const handleChangedValue = (e) => {
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
-    setValueForHolder('');
-    setGetData('');
+    setValueForHolder("");
+    setGetData("");
     setclearProThree(true);
-     
   };
- 
+
   return (
     <>
       <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
@@ -107,7 +99,7 @@ const FormThree = ({
       </InputGroup>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header >
+        <Modal.Header>
           <Modal.Title>Search Depot </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -142,16 +134,13 @@ const FormThree = ({
             ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          
         </Modal.Footer>
       </Modal>
       <Products
         divCode={divCode}
         dist_id={dist_id}
         cfaNumber={cfaNumber}
-     
         disabledOther={disabledOther}
         disableThree={disableThree}
         valueForHolder={valueForHolder}

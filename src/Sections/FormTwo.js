@@ -1,12 +1,12 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {Form, InputGroup} from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import {useSelector} from 'react-redux';
-import FormThree from './FormThree';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Form, InputGroup } from "react-bootstrap";
 
-import {ImCross} from 'react-icons/im';
+import Modal from "react-bootstrap/Modal";
+import { useSelector } from "react-redux";
+import FormThree from "./FormThree";
+
+import { ImCross } from "react-icons/im";
 
 const FormTwo = ({
   dist_id,
@@ -24,23 +24,23 @@ const FormTwo = ({
   const [divCode, setDivCode] = useState(0);
   const [validateTwo, setValidateTwo] = useState(true);
   const [disableThree, setdisableThree] = useState(false);
+  const [clearLast, setClearLast] = useState(false);
 
   const handleClose = (dc) => {
     setShow(false);
     setDivCode(dc);
     setValidateTwo(false);
+    setClearLast(false);
   };
 
   const handleShow = () => {
     setShow(true);
-    if (!validate) {
+    setClearLast(true);
+    if (valueForHolder === "") {
       handleData();
     }
   };
 
-  {
-    /* necessary to clear the field*/
-  }
   useEffect(() => {
     if (disabledOther) {
       setValueForHolder("");
@@ -62,16 +62,14 @@ const FormTwo = ({
     }
   }, [clearOnReselect]);
 
+  /* for clearing the selected fields on reselect */
   useEffect(() => {
-    if(!clearAllField){
-      setGetData('')
-      setValueForHolder('')
-      
+    if (!clearAllField) {
+      setGetData("");
+      setValueForHolder("");
     }
   }, [clearAllField]);
-  //  console.log("getData OutOf useEffect:-", getData);
-  // console.log("clearAllField:-", clearAllField);
-  // console.log("clearOnReselect:-", clearOnReselect);
+ 
 
   const Token = useSelector((state) => state.Auth);
 
@@ -84,7 +82,7 @@ const FormTwo = ({
         }
       )
       .then(function (response) {
-        console.log("response data in formTwo:-", response.data.data);
+        // console.log("response data in formTwo:-", response.data.data);
         setGetData(response.data.data);
       })
       .catch((error) => {
@@ -123,7 +121,7 @@ const FormTwo = ({
       </div>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Select Division</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -136,14 +134,11 @@ const FormTwo = ({
             <InputGroup.Text
               id="basic-addon1"
               style={{ height: "38px" }}
-              onClick={() => handleClearField()}
-            >
-              <ImCross />
-            </InputGroup.Text>
+            ></InputGroup.Text>
           </InputGroup>
           {getData &&
             getData.map((item, i) => (
-              //   console.log("items in getData:-", item)
+             
 
               <div key={i}>
                 <input
@@ -164,9 +159,7 @@ const FormTwo = ({
             ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+        
         </Modal.Footer>
       </Modal>
       <FormThree
@@ -175,6 +168,7 @@ const FormTwo = ({
         validateTwo={validateTwo}
         disabledOther={disabledOther}
         disableThree={disableThree}
+        clearLast={clearLast}
       />
     </>
   );
