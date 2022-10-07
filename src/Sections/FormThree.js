@@ -4,6 +4,7 @@ import {  Form, InputGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Products from "./Products";
 import { ImCross } from "react-icons/im";
+import SearchSection from "./SearchSection";
 const FormThree = ({
   divCode,
   dist_id,
@@ -97,7 +98,6 @@ const FormThree = ({
           <ImCross />
         </InputGroup.Text>
       </InputGroup>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Search Depot </Modal.Title>
@@ -133,10 +133,9 @@ const FormThree = ({
               </div>
             ))}
         </Modal.Body>
-        <Modal.Footer>
-          
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
+     < SearchSection/>
       <Products
         divCode={divCode}
         dist_id={dist_id}
