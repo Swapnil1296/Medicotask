@@ -8,8 +8,7 @@ const FormThree = ({
   divCode,
   dist_id,
   validateTwo,
-  clearField,
-  clearData,
+ 
   disabledOther,
   disableThree,
 }) => {
@@ -17,7 +16,7 @@ const FormThree = ({
   const [getData, setGetData] = useState([]);
   const [valueForHolder, setValueForHolder] = useState('');
   const [cfaNumber, setCfaNum] = useState(0);
-  const [validateThree, setValidateThree] = useState(true);
+  const [clearProThree, setclearProThree] = useState(false);
   
 
    useEffect(() => {
@@ -31,15 +30,16 @@ const FormThree = ({
        setValueForHolder('');
      }
    }, [disableThree]);
-  console.log('disabledOther in three', disabledOther);
-  console.log('disableThree', disableThree);
+  // console.log('disabledOther in three', disabledOther);
+  // console.log('disableThree', disableThree);
   const handleClose = (cfa) => {
     setShow(false);
     setCfaNum(cfa);
   };
   const handleShow = () => {
     setShow(true);
-    if (!validateTwo) {
+    setclearProThree(false);
+    if (dist_id!==0 && divCode !==0) {
       handleData();
     }
   };
@@ -67,35 +67,39 @@ const FormThree = ({
       });
   };
 
-  useEffect(() => {
-    if (dist_id !== 0 && divCode !== 0) {
-      handleData();
-      setValidateThree(false);
-    }
-  }, [divCode, dist_id]);
+  // useEffect(() => {
+  //   if (dist_id !== 0 && divCode !== 0) {
+  //     handleData();
+  //     setValidateThree(false);
+  //   }else{
+  //     return
+  //   }
+  // }, [divCode, dist_id]);
 
   const handleChangedValue = (e) => {
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
     setValueForHolder('');
- 
+    setGetData('');
+    setclearProThree(true);
+     
   };
  
   return (
     <>
-      <InputGroup className="mb-3" style={{width: '300px', margin: '5px'}}>
+      <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
         <Form.Control
           aria-describedby="basic-addon1"
           value={valueForHolder}
           onClick={handleShow}
           className="mb-3"
           placeholder="Select Depot"
-          disabled={disabledOther}
+          disabled={disableThree}
         />
         <InputGroup.Text
           id="basic-addon1"
-          style={{height: '38px'}}
+          style={{ height: "38px" }}
           onClick={() => handleClearField()}
         >
           <ImCross />
@@ -128,8 +132,9 @@ const FormThree = ({
                   onChange={handleChangedValue}
                   onClick={() => handleClose(item.cfa_code)}
                   className="roundCheckbox"
+                  defaultChecked={item.location_name === valueForHolder}
                 />
-                <label for="vehicle1" style={{margin: '2px'}}>
+                <label for="vehicle1" style={{ margin: "2px" }}>
                   {item.location_name}
                 </label>
                 <hr></hr>
@@ -146,11 +151,11 @@ const FormThree = ({
         divCode={divCode}
         dist_id={dist_id}
         cfaNumber={cfaNumber}
-        validateThree={validateThree}
-        clearField={clearField}
-        clearData={clearData}
+     
         disabledOther={disabledOther}
+        disableThree={disableThree}
         valueForHolder={valueForHolder}
+        clearProThree={clearProThree}
       />
     </>
   );

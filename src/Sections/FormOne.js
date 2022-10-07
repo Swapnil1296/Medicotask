@@ -1,27 +1,39 @@
-import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {Button, Container, Form, InputGroup, Modal} from 'react-bootstrap';
-import {ImCross} from 'react-icons/im';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Form, InputGroup, Modal } from "react-bootstrap";
+import { ImCross } from "react-icons/im";
 
-import {useSelector} from 'react-redux';
-import FormTwo from './FormTwo';
+import { useSelector } from "react-redux";
+import FormTwo from "./FormTwo";
 
 const FormOne = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
-  const [valueForHolder, setValueForHolder] = useState('');
+  const [valueForHolder, setValueForHolder] = useState("");
   const [dist_id, setDistID] = useState(0);
   const [validate, setValidate] = useState(true);
-  const [clearField, setClearField] = useState(false);
-  const [clearData, setClearData] = useState(false);
+
   const [disabledOther, setDisabledOther] = useState(false);
- 
+  const [clearOnReselect, setclearOnReselect] = useState(false);
+  const [disableSecond, setdisableSecond]= useState(false);
+  const [clearAllField, setClearAllField]=useState(false)
+
   useEffect(() => {
-    if (valueForHolder === '') {
+    if (valueForHolder === "") {
       setDisabledOther(true);
     }
   }, [valueForHolder]);
   //  console.log('valueForHolder', valueForHolder);
+
+  useEffect(() => {
+    if (valueForHolder === "") {
+      setdisableSecond(true);
+    } else {
+      setdisableSecond(false);
+    }
+  }, [valueForHolder]);
+//  console.log("disableSecond:-", disableSecond);
+//  console.log("valueForHolder:-", valueForHolder);
   const Token = useSelector((state) => state.Auth);
 
   const handleData = () => {
@@ -29,12 +41,12 @@ const FormOne = () => {
       .get(
         `https://alkemapi.indusnettechnologies.com/api/distributor/distributor_list/E?dn=&page_no=${1}`,
         {
-          headers: {Authorization: `Bearer ${Token}`},
+          headers: { Authorization: `Bearer ${Token}` },
         }
       )
       .then(function (response) {
         // console.log("response data in formOne:-", response.data);
-        setData(response.data);
+        setData(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -45,26 +57,33 @@ const FormOne = () => {
     setShow(false);
     setValidate(false);
     setDistID(dist_id);
+      setClearAllField(false);
+    
   };
 
   const handleShow = () => {
     setShow(true);
-    handleData();
+     setClearAllField(true);
+    if (valueForHolder === "") {
+      handleData();
+     
+    }
   };
   const handleChangedValue = (e) => {
     setValueForHolder(e.target.value);
-
+    setclearOnReselect(true);
     setDisabledOther(false);
   };
   const handleClearField = (e) => {
-    setValueForHolder('');
+    setValueForHolder("");
     setDisabledOther(true);
+   setData('')
   };
-  console.log('disabledOther:', disabledOther);
+  
 
   return (
     <Container>
-      <InputGroup className="mb-3" style={{width: '300px', margin: '5px'}}>
+      <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
         <Form.Control
           type="text"
           autoFocus
@@ -76,7 +95,7 @@ const FormOne = () => {
         />
         <InputGroup.Text
           id="basic-addon1"
-          style={{height: '38px'}}
+          style={{ height: "38px" }}
           onClick={() => handleClearField()}
         >
           <ImCross />
@@ -95,8 +114,8 @@ const FormOne = () => {
             placeholder="Search Your Division"
             className="mb-3"
           />
-          {data.data &&
-            data.data.map((item, i) => (
+          {data &&
+            data.map((item, i) => (
               <div key={i}>
                 <input
                   type="checkbox"
@@ -106,8 +125,9 @@ const FormOne = () => {
                   onChange={handleChangedValue}
                   onClick={(e) => handleClose(item.customer_code)}
                   className="roundCheckbox"
+                  defaultChecked={item.customer_name === valueForHolder}
                 />
-                <label for="vehicle1" style={{margin: '2px'}}>
+                <label for="vehicle1" style={{ margin: "2px" }}>
                   {item.customer_name}-{item.customer_code}-
                   <span>({item.location})</span>
                 </label>
@@ -124,9 +144,10 @@ const FormOne = () => {
       <FormTwo
         dist_id={dist_id}
         validate={validate}
-        clearField={clearField}
-        clearData={clearData}
         disabledOther={disabledOther}
+        clearOnReselect={clearOnReselect}
+        disableSecond={disableSecond}
+        clearAllField={clearAllField}
       />
     </Container>
   );
