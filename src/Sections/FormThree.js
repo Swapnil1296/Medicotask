@@ -10,17 +10,32 @@ const FormThree = ({
   validateTwo,
   clearField,
   clearData,
+  disabledOther,
+  disableThree,
 }) => {
-  
   const [show, setShow] = useState(false);
   const [getData, setGetData] = useState([]);
-  const [valueForHolder, setValueForHolder] = useState("");
+  const [valueForHolder, setValueForHolder] = useState('');
   const [cfaNumber, setCfaNum] = useState(0);
   const [validateThree, setValidateThree] = useState(true);
+  
+
+   useEffect(() => {
+     if (disabledOther) {
+       setValueForHolder('');
+     }
+   }, [disabledOther]);
+  
+   useEffect(() => {
+     if (disableThree) {
+       setValueForHolder('');
+     }
+   }, [disableThree]);
+  console.log('disabledOther in three', disabledOther);
+  console.log('disableThree', disableThree);
   const handleClose = (cfa) => {
     setShow(false);
-  
-    ;
+    setCfaNum(cfa);
   };
   const handleShow = () => {
     setShow(true);
@@ -28,11 +43,7 @@ const FormThree = ({
       handleData();
     }
   };
-  useEffect(() => {
-    if (clearField) {
-      setValueForHolder("");
-    }
-  }, [clearField]);
+
   const Token = useSelector((state) => state.Auth);
 
   const handleData = () => {
@@ -40,16 +51,16 @@ const FormThree = ({
       .get(
         `https://alkemapi.indusnettechnologies.com/api/feed/dist_depot/E?dist_id=${dist_id}&dc=${divCode}`,
         {
-          headers: { Authorization: `Bearer ${Token}` },
+          headers: {Authorization: `Bearer ${Token}`},
         }
       )
       .then(function (response) {
         // console.log("response data in formTHree:-", response.data);
         setGetData(response.data.data);
         const value = response.data.data[0];
-        console.log("value:-", value.cfa_code);
-        setValueForHolder(value.location_name);
-          setCfaNum(value.cfa_code);
+        // console.log('value:-', value.cfa_code);
+        // setValueForHolder(value.location_name);
+        // // setCfaNum(value.cfa_code);
       })
       .catch((error) => {
         console.log(error);
@@ -62,35 +73,29 @@ const FormThree = ({
       setValidateThree(false);
     }
   }, [divCode, dist_id]);
- 
 
   const handleChangedValue = (e) => {
-   
     setValueForHolder(e.target.value);
   };
   const handleClearField = (e) => {
-    setValueForHolder("");
-    console.log("clicked");
+    setValueForHolder('');
+ 
   };
-  useEffect(() => {
-    if (clearData) {
-      setValueForHolder("");
-    }
-  }, [clearData]);
+ 
   return (
     <>
-      <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
+      <InputGroup className="mb-3" style={{width: '300px', margin: '5px'}}>
         <Form.Control
           aria-describedby="basic-addon1"
           value={valueForHolder}
           onClick={handleShow}
           className="mb-3"
           placeholder="Select Depot"
-          disabled={clearField}
+          disabled={disabledOther}
         />
         <InputGroup.Text
           id="basic-addon1"
-          style={{ height: "38px" }}
+          style={{height: '38px'}}
           onClick={() => handleClearField()}
         >
           <ImCross />
@@ -124,7 +129,7 @@ const FormThree = ({
                   onClick={() => handleClose(item.cfa_code)}
                   className="roundCheckbox"
                 />
-                <label for="vehicle1" style={{ margin: "2px" }}>
+                <label for="vehicle1" style={{margin: '2px'}}>
                   {item.location_name}
                 </label>
                 <hr></hr>
@@ -144,6 +149,7 @@ const FormThree = ({
         validateThree={validateThree}
         clearField={clearField}
         clearData={clearData}
+        disabledOther={disabledOther}
         valueForHolder={valueForHolder}
       />
     </>

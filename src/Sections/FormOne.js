@@ -1,20 +1,27 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Button, Container, Form, InputGroup, Modal } from "react-bootstrap";
-import { ImCross } from "react-icons/im";
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import {Button, Container, Form, InputGroup, Modal} from 'react-bootstrap';
+import {ImCross} from 'react-icons/im';
 
-import { useSelector } from "react-redux";
-import FormTwo from "./FormTwo";
+import {useSelector} from 'react-redux';
+import FormTwo from './FormTwo';
 
 const FormOne = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
-  const [valueForHolder, setValueForHolder] = useState("");
+  const [valueForHolder, setValueForHolder] = useState('');
   const [dist_id, setDistID] = useState(0);
   const [validate, setValidate] = useState(true);
   const [clearField, setClearField] = useState(false);
   const [clearData, setClearData] = useState(false);
-
+  const [disabledOther, setDisabledOther] = useState(false);
+ 
+  useEffect(() => {
+    if (valueForHolder === '') {
+      setDisabledOther(true);
+    }
+  }, [valueForHolder]);
+  //  console.log('valueForHolder', valueForHolder);
   const Token = useSelector((state) => state.Auth);
 
   const handleData = () => {
@@ -22,7 +29,7 @@ const FormOne = () => {
       .get(
         `https://alkemapi.indusnettechnologies.com/api/distributor/distributor_list/E?dn=&page_no=${1}`,
         {
-          headers: { Authorization: `Bearer ${Token}` },
+          headers: {Authorization: `Bearer ${Token}`},
         }
       )
       .then(function (response) {
@@ -39,32 +46,25 @@ const FormOne = () => {
     setValidate(false);
     setDistID(dist_id);
   };
-  useEffect(()=>{
-    if(valueForHolder ===''){
-      setClearField(true)
-    }
-  },[valueForHolder])
-console.log("valueForHolder", valueForHolder);
+
   const handleShow = () => {
     setShow(true);
     handleData();
   };
   const handleChangedValue = (e) => {
     setValueForHolder(e.target.value);
-    setClearField(false);
+
+    setDisabledOther(false);
   };
   const handleClearField = (e) => {
-    setValueForHolder("");
-    setClearData(true);
+    setValueForHolder('');
+    setDisabledOther(true);
   };
-  useEffect(() => {
-    if (clearData) {
-      setData("");
-    }
-  }, [clearData]);
+  console.log('disabledOther:', disabledOther);
+
   return (
     <Container>
-      <InputGroup className="mb-3" style={{ width: "300px", margin: "5px" }}>
+      <InputGroup className="mb-3" style={{width: '300px', margin: '5px'}}>
         <Form.Control
           type="text"
           autoFocus
@@ -76,7 +76,7 @@ console.log("valueForHolder", valueForHolder);
         />
         <InputGroup.Text
           id="basic-addon1"
-          style={{ height: "38px" }}
+          style={{height: '38px'}}
           onClick={() => handleClearField()}
         >
           <ImCross />
@@ -107,7 +107,7 @@ console.log("valueForHolder", valueForHolder);
                   onClick={(e) => handleClose(item.customer_code)}
                   className="roundCheckbox"
                 />
-                <label for="vehicle1" style={{ margin: "2px" }}>
+                <label for="vehicle1" style={{margin: '2px'}}>
                   {item.customer_name}-{item.customer_code}-
                   <span>({item.location})</span>
                 </label>
@@ -126,6 +126,7 @@ console.log("valueForHolder", valueForHolder);
         validate={validate}
         clearField={clearField}
         clearData={clearData}
+        disabledOther={disabledOther}
       />
     </Container>
   );
