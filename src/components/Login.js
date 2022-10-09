@@ -27,7 +27,10 @@ function Login() {
             "https://alkemapi.indusnettechnologies.com/api/employee/login",
             payload
           )
-          .then((res) => dispatch({ type: "LOGIN", payload: res.data.token }))
+          .then((res) => {
+            console.log(res)
+            dispatch({ type: "LOGIN", payload: res.data.token })
+          })
           .catch((errors) => {
             console.log(errors);
             actions.setErrors(errors.response.data.errors);
